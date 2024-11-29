@@ -1,13 +1,14 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-import Navbar from './components/Navbar';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import HomePage from './pages/HomePage';
-import Roommates from './pages/Roommates';
-import Rooms from './pages/Rooms';
-import Shortlist from './pages/Shortlist';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
+import Navbar from "./components/Navbar";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import HomePage from "./pages/HomePage";
+import Roommates from "./pages/Roommates";
+import Rooms from "./pages/Rooms";
+import Shortlist from "./pages/Shortlist";
+import RoommateDetails from "./pages/RoommateDetails";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/roommates" element={<Roommates />} />
           <Route path="/rooms" element={<Rooms />} />
           <Route path="/shortlist" element={<Shortlist />} />
+          <Route path="/roommate-details" element={<RoommateDetails />} />
         </Routes>
       </div>
     </Router>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 
@@ -46,6 +47,8 @@ const Roommates = () => {
     };
   };
 
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const formattedData = formatKeysWithSpaces(formData);
@@ -58,6 +61,9 @@ const Roommates = () => {
       .then((response) => {
         console.log("Form submitted successfully");
         console.log(response.data);
+        navigate("/roommate-details", {
+          state: { matchedPreferences: response.data },
+        });
         // handle success actions here, e.g., notifications, redirect, etc.
       })
       .catch((error) => {
