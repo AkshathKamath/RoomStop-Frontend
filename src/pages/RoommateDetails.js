@@ -1,5 +1,6 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
+import Navbar from '../components/Navbar';
 
 const RoommateDetails = () => {
   const location = useLocation();
@@ -32,25 +33,28 @@ const RoommateDetails = () => {
   }
 
   return (
-    <div className="container mt-3">
-      <h2>Matched Roommates</h2>
-      <div className="row">
-        {matchedPreferences.map((roommate, index) => (
-          <div key={index} className="col-md-4 mb-4">
-            <div className="card">
-              <div className="card-body">
-                <h5 className="card-title">{roommate.Name || "Unknown"}</h5>
-                <ul className="list-group list-group-flush">
-                  {Object.entries(roommate).map(([key, value]) => (
-                    <li className="list-group-item" key={key}>
-                      <strong>{key}:</strong> {value || "N/A"}
-                    </li>
-                  ))}
-                </ul>
+    <div>
+      <Navbar />
+      <div className="container mt-3">
+        <h2>Matched Roommates</h2>
+        <div className="row">
+          {matchedPreferences.map((roommate, index) => (
+            <div key={index} className="col-md-4 mb-4">
+              <div className="card">
+                <div className="card-body">
+                  <h5 className="card-title">{roommate.Name || "Unknown"}</h5>
+                  <ul className="list-group list-group-flush">
+                    {Object.entries(roommate).map(([key, value]) => (
+                      <li className="list-group-item" key={key}>
+                        <strong>{key}:</strong> {value || "N/A"}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
