@@ -8,6 +8,7 @@ import HomePage from './pages/HomePage';
 import Roommates from './pages/Roommates';
 import Rooms from './pages/Rooms';
 import Shortlist from './pages/Shortlist';
+import RoommateDetails from "./pages/RoommateDetails";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/roommates" element={<Roommates />} />
           <Route path="/rooms" element={<Rooms />} />
           <Route path="/shortlist" element={<Shortlist />} />
+          <Route path="/roommate-details" element={<RoommateDetails />} />
         </Routes>
       </div>
     </Router>
