@@ -1,87 +1,86 @@
-import React, { useEffect, useState } from 'react';
-import Navbar from '../components/Navbar';
-import axios from 'axios';
-import './Rooms.css'; // Import custom CSS for room styling
+import React, { useEffect, useState } from "react";
+import Navbar from "../components/Navbar";
+import axios from "axios";
+import "./Rooms.css"; // Import custom CSS for room styling
 
 const Shortlist = () => {
+  const [shortlistedRooms, setShortlistedRooms] = useState([]); // State to store shortlisted rooms
 
-    const rooms = [
-        {
-          room_id: "1",
-          Location: "123 Main St, Boston, MA",
-          Rent_USD: "1200.00",
-          Bedrooms: 2,
-          Bathrooms: 1,
-          Square_Feet: 850,
-          Furnished: "Yes",
-          Pet_Friendly: "No",
-          Available_From: "2024-01-01",
-          Parking_Available: "Yes",
-          Image_Link: "https://media.istockphoto.com/id/1168256209/photo/multifunctional-bedroom-and-workspace-interior-with-bed-and-desk.jpg?s=2048x2048&w=is&k=20&c=KU4jYxXSuUHiMgPq-z9_gse-KbfEx7UHciRe5CmJu5c=" // Sample image for display
-        },
-        {
-          room_id: "2",
-          Location: "456 Elm St, Boston, MA",
-          Rent_USD: "1400.00",
-          Bedrooms: 3,
-          Bathrooms: 2,
-          Square_Feet: 1150,
-          Furnished: "No",
-          Pet_Friendly: "Yes",
-          Available_From: "2024-02-01",
-          Parking_Available: "No",
-          Image_Link: "https://media.istockphoto.com/id/1390233984/photo/modern-luxury-bedroom.jpg?s=2048x2048&w=is&k=20&c=Qr6-TUnCMpsuArE5v8cOuumfxBR41IXi2ht5CW6OtXo="
-        }
-      ];
-
-  const [shortlistedRooms, setShortlistedRooms] = useState([]);
-
+  // Fetch shortlisted apartments from the API
   useEffect(() => {
     const fetchShortlistedRooms = async () => {
       try {
-        const response = await axios.get('/api/shortlist');
-        setShortlistedRooms(response.data.rooms);
+        const response = await axios.get(
+          "https://roomstop-backend-production.up.railway.app/rooms/show_shortlisted_apartments"
+        );
+        console.log("Shortlisted Rooms Response:", response.data);
+        // console.log(Array.isArray(JSON.parse(response.data)));
+
+        setShortlistedRooms(JSON.parse(response.data)); // Set the fetched rooms
       } catch (error) {
-        console.error('Failed to fetch shortlisted rooms:', error);
+        console.error("Failed to fetch shortlisted rooms:", error);
       }
     };
 
     fetchShortlistedRooms();
   }, []);
 
-  const handleRemove = async (roomId) => {
+  // Handle Delete button click
+  const handleRemove = async (apartmentId) => {
     try {
-      await axios.delete(`/api/shortlist/${roomId}`);
-      setShortlistedRooms(shortlistedRooms.filter(room => room.room_id !== roomId));
+      console.log(apartmentId);
+      const response = await axios.delete(
+        "https://roomstop-backend-production.up.railway.app/rooms/deleteapartment",
+        { apartment_id: apartmentId } // Pass the apartment ID as JSON
+      );
+      console.log(response.data);
+
+      // Remove the deleted room from the state
+      setShortlistedRooms((prevState) =>
+        prevState.filter((room) => room.Apartment_ID !== apartmentId)
+      );
     } catch (error) {
-      console.error('Failed to remove room from shortlist:', error);
+      console.error("Failed to remove room from shortlist:", error);
     }
   };
 
   return (
     <div>
       <Navbar />
+      {/* <div className="container mt-4">
+        <h1>Shortlisted Rooms</h1>
+        <p>No shortlisted rooms available.</p>
+      </div> */}
       <div className="container mt-4">
-        <h1>Available Rooms</h1>
-        {rooms.map((room) => (
-          <div key={room.room_id} className="room-card">
-            <div className="room-image">
-              <img src={room.Image_Link} alt="Room" />
+        <h1>Shortlisted Rooms</h1>
+        {shortlistedRooms.length === 0 ? (
+          <p>No shortlisted rooms available.</p>
+        ) : (
+          shortlistedRooms.map((room) => (
+            <div key={room.Apartment_ID} className="room-card">
+              <div className="room-image">
+                <img src={room.Image_Link} alt="Room" />
+              </div>
+              <div className="room-details">
+                <h5>Location: {room.Location}</h5>
+                <p>Rent: ${room.Rent_USD}</p>
+                <p>Bedrooms: {room.Bedrooms}</p>
+                <p>Bathrooms: {room.Bathrooms}</p>
+                <p>Square Feet: {room.Square_Feet}</p>
+                <p>Furnished: {room.Furnished}</p>
+                <p>Pet Friendly: {room.Pet_Friendly}</p>
+                <p>Available From: {room.Available_From}</p>
+                <p>Parking Available: {room.Parking_Available}</p>
+                <button
+                  className="btn btn-danger"
+                  onClick={() => handleRemove(room.Apartment_ID)}
+                >
+                  Delete
+                </button>
+              </div>
             </div>
-            <div className="room-details">
-              <h5>Location: {room.Location}</h5>
-              <p>Rent: ${room.Rent_USD}</p>
-              <p>Bedrooms: {room.Bedrooms}</p>
-              <p>Bathrooms: {room.Bathrooms}</p>
-              <p>Square Feet: {room.Square_Feet}</p>
-              <p>Furnished: {room.Furnished}</p>
-              <p>Pet Friendly: {room.Pet_Friendly}</p>
-              <p>Available From: {room.Available_From}</p>
-              <p>Parking Available: {room.Parking_Available}</p>
-              <button className="btn btn-primary">Add to Shortlist</button>
-            </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </div>
   );
