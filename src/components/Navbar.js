@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faUserFriends, faBed, faList } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faUserFriends, faBed, faList, faChartBar } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.css'; // Import custom styles for the navbar
 
 const Navbar = () => (
@@ -18,6 +18,9 @@ const Navbar = () => (
             </li>
             <li className="nav-item">
                 <Link className="nav-link" to="/shortlist"><FontAwesomeIcon icon={faList} /> My Shortlist</Link>
+            </li>
+            <li className="nav-item">
+                <Link className="nav-link" to="/analytics"><FontAwesomeIcon icon={faChartBar} /> Analytics</Link>
             </li>
         </ul>
     </div>

@@ -9,6 +9,7 @@ import Roommates from "./pages/Roommates";
 import Rooms from "./pages/Rooms";
 import Shortlist from "./pages/Shortlist";
 import RoommateDetails from "./pages/RoommateDetails";
+import Analytics from "./pages/Analytics";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/rooms" element={<Rooms />} />
           <Route path="/shortlist" element={<Shortlist />} />
           <Route path="/roommate-details" element={<RoommateDetails />} />
+          <Route path="/analytics" element={<Analytics />}/>
         </Routes>
       </div>
     </Router>
